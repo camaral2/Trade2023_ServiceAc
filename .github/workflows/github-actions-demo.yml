@@ -51,7 +51,7 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         password: ${{ secrets.SSH_PASSWORD }}
         port: 22
-        source: "dist/*"
+        source: "dist/src/*"
         target: "apps_nodejs/trade2023_serviceac"
         debug: true  
         strip_components: 2
