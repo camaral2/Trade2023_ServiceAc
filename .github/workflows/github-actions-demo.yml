@@ -39,9 +39,6 @@ jobs:
     - name: Running testing
       run: yarn test
 
-    - name: build
-      run: yarn build    
-      
     - name: copy dist via ssh password
       uses: appleboy/scp-action@v0.1.4
       env:
@@ -51,7 +48,7 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         password: ${{ secrets.SSH_PASSWORD }}
         port: 22
-        source: "dist/src/*"
+        source: "dist/*"
         target: "apps_nodejs/trade2023_serviceac"
         debug: true  
         strip_components: 2
