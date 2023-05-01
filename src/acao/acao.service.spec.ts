@@ -77,7 +77,7 @@ describe('AcaoService', () => {
         Promise.resolve(mockConfigAcaoNotData as configAcao),
       );
 
-    const spyRequestFirst = jest
+    const spyRequest = jest
       .spyOn(request, 'getRequest')
       .mockResolvedValue(dadoHtml);
 
@@ -86,7 +86,7 @@ describe('AcaoService', () => {
 
     expect(request.getRequest).toBeCalled();
     expect(spyFindConfigAcao).toBeCalled();
-    expect(spyRequestFirst).toBeCalled();
+    expect(spyRequest).toBeCalled();
 
     expect(ret.acao).toEqual(acao);
     expect(ret.value).toEqual(4.06);
@@ -101,7 +101,7 @@ describe('AcaoService', () => {
         Promise.resolve(mockConfigAcaoWithData as configAcao),
       );
 
-    const spyRequestSecound = jest
+    const spyRequest = jest
       .spyOn(request, 'getRequest')
       .mockResolvedValue(dadoHtml);
 
@@ -110,7 +110,7 @@ describe('AcaoService', () => {
 
     expect(spyFindConfigAcao).toBeCalled();
     expect(request.getRequest).not.toBeCalled();
-    expect(spyRequestSecound).not.toBeCalled();
+    expect(spyRequest).not.toBeCalled();
 
     expect(ret).toMatchObject(mockDadosAcao);
   });
@@ -129,5 +129,40 @@ describe('AcaoService', () => {
     );
 
     expect(spyFindConfigAcao).toBeCalled();
+  });
+
+  it('Should exception because not send name Ação as parameters', async () => {
+    const spyFindConfigAcao = jest
+      .spyOn(configAcaoRepository, 'findOne')
+      .mockImplementationOnce(() => Promise.resolve(null));
+
+    await expect(service.getAcaoToday(null)).rejects.toThrow(
+      new UnauthorizedException({
+        message: 'nomeAcao is empty',
+      }),
+    );
+
+    expect(spyFindConfigAcao).not.toBeCalled();
+  });
+
+  it('Should return null of dont get html', async () => {
+    const dataConfigAcao = new configAcao(mockConfigAcaoNotData);
+
+    const spyFindConfigAcao = jest
+      .spyOn(configAcaoRepository, 'findOne')
+      .mockImplementationOnce(() => Promise.resolve(dataConfigAcao));
+
+    const spyRequest = jest
+      .spyOn(request, 'getRequest')
+      .mockResolvedValue(null);
+
+    const acao = 'MGLU3';
+    const ret = await service.getAcaoToday(acao);
+
+    expect(spyFindConfigAcao).toBeCalled();
+    expect(request.getRequest).toBeCalled();
+    expect(spyRequest).toBeCalled();
+
+    expect(ret).toEqual(null);
   });
 });

@@ -8,7 +8,6 @@ export class RequestUtils {
       if (headers) {
         options['headers'] = headers;
       }
-
       const { data } = await axios.get(url, options);
 
       return data;
