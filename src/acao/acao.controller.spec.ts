@@ -30,7 +30,7 @@ describe('AcaoController', () => {
     acaoController = app.get<AcaoController>(AcaoController);
   });
 
-  it('should be defined', () => {
+  it('should be defined - AcaoController', () => {
     expect(acaoController).toBeDefined();
   });
 

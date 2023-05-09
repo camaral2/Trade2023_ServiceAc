@@ -16,9 +16,11 @@ describe('AppController (e2e)', () => {
   });
 
   it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+    return request(app.getHttpServer()).get('/').expect(200).expect({
+      app: 'trade2023_service-ac',
+      author: 'Cristian dos Santos Amaral',
+      email: 'cristian_amaral@hotmail.com',
+      version: '1.0.2',
+    });
   });
 });
