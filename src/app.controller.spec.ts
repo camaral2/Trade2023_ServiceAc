@@ -23,7 +23,7 @@ describe('AppController', () => {
       app: 'trade2023_service-ac',
       author: 'Cristian dos Santos Amaral',
       email: 'cristian_amaral@hotmail.com',
-      version: '1.0.2',
+      version: process.env.npm_package_version,
     });
   });
 });

@@ -7,7 +7,7 @@ export class ConfigService {
     dotenv.config();
 
     this.envConfig = {
-      port: process.env.AC_SERVICE_PORT,
+      port: process.env.ACAO_SERVICE_PORT,
     };
     this.envConfig.MONGO_URL = process.env.MONGO_URL;
   }

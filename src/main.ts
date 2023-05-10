@@ -9,7 +9,7 @@ const serviceName = process.env.npm_package_name;
 const serviceVersion = process.env.npm_package_version;
 
 const logger = new Logger(serviceName);
-const port = new ConfigService().get('port') || 4000;
+const port = new ConfigService().get('port') || 4001;
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice(AppModule, {
