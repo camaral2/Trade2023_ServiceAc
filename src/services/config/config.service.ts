@@ -10,6 +10,7 @@ export class ConfigService {
       port: process.env.ACAO_SERVICE_PORT,
     };
     this.envConfig.MONGO_URL = process.env.MONGO_URL;
+    this.envConfig.BEARER_TOKEN = process.env.BEARER_TOKEN;
   }
 
   get(key: string): any {
