@@ -3,13 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { processo } from './entities/processo.entity';
 import { configAcao } from '../acao/entities/configAcao.entity';
-import { typeKey } from './enum/typeKey.enum';
-import { typeStatus } from './enum/typeStatus.enum';
+import { logProcessoTypeKey } from './enum/typeKey.enum';
+import { logProcessoTypeStatus } from './enum/typeStatus.enum';
 
 @Injectable()
 export class LogProcessoService {
-  typeKey: any;
-  typeStatus: any;
   constructor(
     @InjectRepository(processo)
     private readonly processoRepository: Repository<processo>,
@@ -27,37 +25,37 @@ export class LogProcessoService {
         new processo({
           sessao: pSessao,
           acao: pAcao,
-          key: typeKey.kInicio,
+          key: logProcessoTypeKey.kInicio,
           descricao: 'Processando Requisição',
-          status: typeStatus.sPendente,
+          status: logProcessoTypeStatus.sPendente,
         }),
         new processo({
           sessao: pSessao,
           acao: pAcao,
-          key: typeKey.kTwitter,
+          key: logProcessoTypeKey.kTwitter,
           descricao: 'Captura Twitter',
-          status: typeStatus.sPendente,
+          status: logProcessoTypeStatus.sPendente,
         }),
         new processo({
           sessao: pSessao,
           acao: pAcao,
-          key: typeKey.kAcoes,
+          key: logProcessoTypeKey.kAcoes,
           descricao: 'Captura Ações',
-          status: typeStatus.sPendente,
+          status: logProcessoTypeStatus.sPendente,
         }),
         new processo({
           sessao: pSessao,
           acao: pAcao,
-          key: typeKey.kCentraliza,
+          key: logProcessoTypeKey.kCentraliza,
           descricao: 'Centraliza as Informações',
-          status: typeStatus.sPendente,
+          status: logProcessoTypeStatus.sPendente,
         }),
         new processo({
           sessao: pSessao,
           acao: pAcao,
-          key: typeKey.kPrognostico,
+          key: logProcessoTypeKey.kPrognostico,
           descricao: 'Gera Prognóstico',
-          status: typeStatus.sPendente,
+          status: logProcessoTypeStatus.sPendente,
         }),
       ];
 
@@ -88,11 +86,14 @@ export class LogProcessoService {
       updateFields.error = pErro;
     }
 
-    if (pStatus === typeStatus.sExecucao) {
+    if (pStatus === logProcessoTypeStatus.sExecucao) {
       updateFields.dtInicio = new Date();
     }
 
-    if (pStatus === typeStatus.sConcluido || pStatus === typeStatus.sError) {
+    if (
+      pStatus === logProcessoTypeStatus.sConcluido ||
+      pStatus === logProcessoTypeStatus.sError
+    ) {
       updateFields.dtFim = new Date();
     }
 

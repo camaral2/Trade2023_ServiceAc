@@ -58,4 +58,11 @@ describe('TwitterService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  // it('Should not return value of ação today', async () => {
+  //   const parAcao = { sessao: 'jjkkf' };
+
+  //   const ret = await service.getTwitter(parAcao);
+  //   expect(ret).toMatchObject(parAcao);
+  // });
 });

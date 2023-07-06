@@ -8,6 +8,8 @@ import { historico } from './entities/historico.entity';
 import { paramsTwitterInterface } from './interface/params.twitter.interface';
 import logger from '../utils/logger';
 import { ConfigService } from './../services/config/config.service';
+import { logProcessoTypeKey } from './../log-processo/enum/typeKey.enum';
+import { logProcessoTypeStatus } from './../log-processo/enum/typeStatus.enum';
 
 @Injectable()
 export class TwitterService {
@@ -27,8 +29,8 @@ export class TwitterService {
     try {
       await this.logProc.updateProcesso(
         par.sessao,
-        this.logProc.typeKey.kTwitter,
-        this.logProc.typeStatus.sExecucao,
+        logProcessoTypeKey.kTwitter,
+        logProcessoTypeStatus.sExecucao,
       );
 
       let dtInicial = null;
@@ -44,15 +46,15 @@ export class TwitterService {
 
       await this.logProc.updateProcesso(
         par.sessao,
-        this.logProc.typeKey.kTwitter,
-        this.logProc.typeStatus.sConcluido,
+        logProcessoTypeKey.kTwitter,
+        logProcessoTypeStatus.sConcluido,
       );
       return d;
     } catch (error) {
       await this.logProc.updateProcesso(
         par.sessao,
-        this.logProc.typeKey.kTwitter,
-        this.logProc.typeStatus.sError,
+        logProcessoTypeKey.kTwitter,
+        logProcessoTypeStatus.sError,
         error,
       );
       throw error;
