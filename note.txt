@@ -1,2 +1,14 @@
 The best site of unit test for microservices
 https://www.freecodecamp.org/news/testing-microservices-are-they-production-ready-2/
+
+Git branch
+--------------------------------------------------------
+https://medium.com/whatsgooddev/como-atualizar-sua-branch-no-git-de-forma-apropriada-ccbc932c3a1c
+
+Git merge branch
+----------------------------------------------------------------
+git checkout main
+git pull origin main
+git merge test
+git commit -m "Merge branch 'test' into main"
+git push origin main

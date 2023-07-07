@@ -5,6 +5,7 @@ import { processo } from './entities/processo.entity';
 import { configAcao } from '../acao/entities/configAcao.entity';
 import { logProcessoTypeKey } from './enum/typeKey.enum';
 import { logProcessoTypeStatus } from './enum/typeStatus.enum';
+import { IUpdateDeleteProcessoResponse } from './interfaces/update-deleteProcessoResponse.interface';
 
 @Injectable()
 export class LogProcessoService {
@@ -19,7 +20,7 @@ export class LogProcessoService {
     return Math.random().toString(26).slice(2);
   }
 
-  async createProcesso(pSessao: string, pAcao: string): Promise<any> {
+  async createProcesso(pSessao: string, pAcao: string): Promise<processo[]> {
     try {
       const processoData: processo[] = [
         new processo({
@@ -77,7 +78,7 @@ export class LogProcessoService {
     pKey: number,
     pStatus: number,
     pErro?: any,
-  ): Promise<any> {
+  ): Promise<IUpdateDeleteProcessoResponse> {
     const updateFields: any = {
       status: pStatus,
     };
@@ -105,14 +106,14 @@ export class LogProcessoService {
     return result;
   }
 
-  async consultaProcesso(pSessao: string): Promise<any[]> {
+  async consultaProcesso(pSessao: string): Promise<processo[]> {
     const result = await this.processoRepository.find({
       where: { sessao: pSessao },
     });
     return result;
   }
 
-  async expurgoProcesso(): Promise<any> {
+  async expurgoProcesso(): Promise<IUpdateDeleteProcessoResponse> {
     const result = await this.processoRepository.delete({});
     return result;
   }

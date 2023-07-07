@@ -21,7 +21,13 @@ export class processo extends BaseEntity {
   status: number;
 
   @Column()
-  data: Date;
+  dtInicio?: Date;
+
+  @Column()
+  dtFim?: Date;
+
+  @Column()
+  error?: string;
 
   constructor(obj?: Partial<processo>) {
     super();
