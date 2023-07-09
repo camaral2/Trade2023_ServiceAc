@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { configAcao } from './../acao/entities/configAcao.entity';
 import { historico } from './entities/historico.entity';
 import { processo } from './../log-processo/entities/processo.entity';
+import { TwitterController } from './twitter.controller';
 
 @Module({
   //  controllers: [TwitterController],
@@ -15,5 +16,6 @@ import { processo } from './../log-processo/entities/processo.entity';
   ],
   providers: [TwitterService, LogProcessoService],
   exports: [TwitterService],
+  controllers: [TwitterController],
 })
 export class TwitterModule {}

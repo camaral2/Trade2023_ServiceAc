@@ -10,6 +10,7 @@ import logger from '../utils/logger';
 import { ConfigService } from './../services/config/config.service';
 import { logProcessoTypeKey } from './../log-processo/enum/typeKey.enum';
 import { logProcessoTypeStatus } from './../log-processo/enum/typeStatus.enum';
+import { acaoTwitterInterface } from './interface/acao.twitter.interface';
 
 @Injectable()
 export class TwitterService {
@@ -25,7 +26,7 @@ export class TwitterService {
     private logProc: LogProcessoService,
   ) {}
 
-  async getTwitter(par: any): Promise<any> {
+  async getTwitter(par: acaoTwitterInterface): Promise<acaoTwitterInterface> {
     try {
       await this.logProc.updateProcesso(
         par.sessao,
@@ -34,14 +35,15 @@ export class TwitterService {
       );
 
       let dtInicial = null;
-      const ultimoHistorico = await this.getUltimaData(par.nomeAcao);
+      const ultimoHistorico = await this.getUltimaData(par.acao);
 
       if (ultimoHistorico != null) dtInicial = ultimoHistorico.created_at;
 
-      await this.getRequest(par.nomeAcao, null, dtInicial);
+      await this.getRequest(par.acao, null, dtInicial);
 
-      const d = {
-        Acao: par.nomeAcao,
+      const d: acaoTwitterInterface = {
+        acao: par.acao,
+        sessao: par.sessao,
       };
 
       await this.logProc.updateProcesso(
