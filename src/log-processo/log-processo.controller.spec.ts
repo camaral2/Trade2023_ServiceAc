@@ -4,7 +4,6 @@ import { LogProcessoService } from './log-processo.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { processo } from './entities/processo.entity';
 import { configAcao } from './../acao/entities/configAcao.entity';
-import { historico } from './../twitter/entities/historico.entity';
 
 describe('LogProcessoController', () => {
   let controller: LogProcessoController;
@@ -24,13 +23,6 @@ describe('LogProcessoController', () => {
         },
         {
           provide: getRepositoryToken(processo),
-          useValue: {
-            update: jest.fn(),
-            findOne: jest.fn(),
-          },
-        },
-        {
-          provide: getRepositoryToken(historico),
           useValue: {
             update: jest.fn(),
             findOne: jest.fn(),
