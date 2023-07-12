@@ -5,7 +5,6 @@ import { AcaoModule } from './acao/acao.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TwitterModule } from './twitter/twitter.module';
 import { LogProcessoModule } from './log-processo/log-processo.module';
 
 @Module({
@@ -25,7 +24,6 @@ import { LogProcessoModule } from './log-processo/log-processo.module';
       inject: [ConfigService], // Inject the ConfigService
     }),
     AcaoModule,
-    TwitterModule,
     LogProcessoModule,
   ],
   controllers: [AppController],
