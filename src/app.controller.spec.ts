@@ -20,7 +20,7 @@ describe('AppController', () => {
 
   it('should return "Version"', () => {
     expect(appController.getVersion()).toMatchObject({
-      app: 'trade2023_service-ac',
+      app: 'trade2023_serviceac',
       author: 'Cristian dos Santos Amaral',
       email: 'cristian_amaral@hotmail.com',
       version: process.env.npm_package_version,
