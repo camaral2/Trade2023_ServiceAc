@@ -23,6 +23,18 @@ export class AcaoService {
     private requestUtils: RequestUtils,
   ) {}
 
+  async getAll(): Promise<configAcao[]> {
+    try {
+      const ret = await this.configAcaoRepository.find({
+        order: { desc: 'ASC' },
+      });
+      return ret;
+    } catch (err) {
+      logger.error(`Acao.Service.getAll() - Error: ${err}`);
+      throw err;
+    }
+  }
+
   async getAcaoToday(nomeAcao: string): Promise<AcaoDto> {
     try {
       if (!nomeAcao || nomeAcao == undefined)

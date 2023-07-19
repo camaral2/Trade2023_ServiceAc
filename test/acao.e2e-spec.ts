@@ -2,35 +2,56 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
+import { ClientProxy, ClientsModule, Transport } from '@nestjs/microservices';
+import { firstValueFrom } from 'rxjs';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
+  let client: ClientProxy;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [
+        AppModule,
+        ClientsModule.register([
+          { name: 'clientProcess', transport: Transport.TCP },
+        ]),
+      ],
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    app.connectMicroservice({ Transport: Transport.TCP });
+
+    await app.startAllMicroservices();
     await app.init();
+
+    client = app.get('clientProcess');
+    await client.connect();
   });
 
   afterAll(async () => {
     await app.close();
+    await client.close();
   });
 
-  it('should handle get_acao_today message', async () => {
-    const payload = { acao: 'example' }; // Provide appropriate payload
+  describe('@get_acao_all', () => {
+    it('should list all acoes', async () => {
+      const resultConsulta = await firstValueFrom(
+        client.send('get_acao_all', ''),
+      );
 
-    const response = await request(app.getHttpServer())
-      .post('/your-microservice-endpoint') // Replace with your microservice endpoint
-      .send({
-        pattern: 'get_acao_today',
-        data: payload,
-      })
-      .expect(200);
+      // Validate if the result is an array
+      expect(resultConsulta).toBeInstanceOf(Array);
 
-    // Add your assertions for the response
-    expect(response.body).toBeDefined();
+      // Validate if the array length is 5
+      expect(resultConsulta.length).toBeGreaterThan(0);
+
+      // Validate if all objects have the required attributes
+      for (const obj of resultConsulta) {
+        expect(obj).toHaveProperty('url');
+        expect(obj).toHaveProperty('acao');
+        expect(obj).toHaveProperty('desc');
+      }
+    });
   });
 });
